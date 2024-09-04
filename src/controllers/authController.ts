@@ -1,6 +1,7 @@
 import { NextFunction, Response, Request } from "express";
 import authService from "../services/authService";
 import "../express-session";
+import { v4 as uuidv4 } from "uuid";
 
 class AuthController {
   async registration(
@@ -26,7 +27,7 @@ class AuthController {
       if ("error" in user) {
         throw new Error();
       }
-      req.session.userId = user._id.toString();
+      req.session.user = user;
       res.status(200).json(user);
     } catch (error) {
       res.status(404).json(error);
